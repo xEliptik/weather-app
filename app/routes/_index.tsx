@@ -12,7 +12,6 @@ import { Locationlist, LocationListProps } from "~/components/locationlist";
 import { Locationform } from "~/components/locationform";
 import { MetaFunction, LoaderFunction, ActionFunction } from '@remix-run/node';
 import { handleKeyDown, searchLocation, fetchWeatherDataByLocation } from "~/utils/locationFunctions";
-
 /**
  * Loads user data and user locations based on the authentication status.
  *
@@ -22,22 +21,17 @@ import { handleKeyDown, searchLocation, fetchWeatherDataByLocation } from "~/uti
  * @throws {Error} - Throws an error if authentication fails.
  */
 export const loader: LoaderFunction = async ({ request }) => {
-  try {
-    // Authenticate user and redirect to login page on failure
-    const user = await authenticator.isAuthenticated(request, {
-      failureRedirect: "/login",
-    });
 
-    // Retrieve user locations based on user ID
-    const userLocation = await getMyLocations(user.id);
+  // Authenticate user and redirect to login page on failure
+  const user = await authenticator.isAuthenticated(request, {
+    failureRedirect: "/login",
+  });
 
-    // Return user and userLocation data
-    return { user, userLocation };
-  } catch (error) {
-    // Handle authentication errors here
-    console.error("Error in loader function:", error);
-    throw new Error("Authentication failed");
-  }
+  // Retrieve user locations based on user ID
+  const userLocation = await getMyLocations(user.id);
+  // Return user and userLocation data
+  return { user, userLocation };
+
 };
 
 /**
@@ -48,62 +42,51 @@ export const loader: LoaderFunction = async ({ request }) => {
  * @returns {Promise<unknown|null>} - A promise that resolves to the result of the action.
  */
 export const action: ActionFunction = async ({ request }) => {
-  try {
-    // Parse form data
-    const form = await request.formData();
-    const action = form.get("action");
-    const place = form.get("place");
-    const data = form.get("data"); // No need to parse data as it's already a string or null
+  const form = await request.formData();
+  const action = form.get("action");
+  const place = form.get("place");
+  const data = form.get("data"); // No need to parse data as it's already a string or null
 
-    switch (action) {
-      case "logout": {
-        // Logout user and redirect to login page
-        return await authenticator.logout(request, { redirectTo: "/login" });
-      }
-      case "new": {
-        // Parse JSON data if available
-        const jsonData = typeof data === 'string' ? JSON.parse(data) : null;
+  switch (action) {
 
-        console.log("Data:", data);
-        console.log("jsonData:", jsonData);
+    case "logout": {
+      return await authenticator.logout(request, { redirectTo: "/login" })
 
-        // Check if location with the same place already exists
-        const existingLocation = await findLocationByPlace(place);
-        if (!place) {
-          return null;
-        }
-        if (existingLocation) {
-          console.log("Location already exists:", place);
-          return null;
-        }
-
-        // Create a new location
-        const user = await authenticator.isAuthenticated(request);
-        const newLocation = await createLocation({
-          place: place as string,
-          postedBy: {
-            connect: {
-              id: user.id
-            }
-          }
-        });
-
-        return newLocation;
-      }
-      case "delete": {
-        // Delete location by ID
-        const id = form.get("id");
-        const deletedTask = await deleteLocation(id);
-        return deletedTask;
-      }
-      default:
-        return null;
     }
-  } catch (error) {
-    // Handle errors here
-    console.error("Error in action function:", error);
-    return null;
+    case "new": {
+
+      const existingLocation = await findLocationByPlace(place);
+      if (!place) {
+        return null;
+      }
+      if (existingLocation) {
+        console.log("Location already exists:", place);
+        return null;
+      }
+
+      // Create a new location
+      const user = await authenticator.isAuthenticated(request);
+      const newLocation = await createLocation({
+        place: place as string,
+        postedBy: {
+          connect: {
+            id: user.id
+          }
+        }
+      });
+
+      return newLocation;
+    }
+    case "delete": {
+      // Delete location by ID
+      const id = form.get("id");
+      const deletedTask = await deleteLocation(id);
+      return deletedTask;
+    }
+    default:
+      return null;
   }
+
 };
 
 

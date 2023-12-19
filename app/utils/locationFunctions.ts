@@ -1,19 +1,4 @@
-import type { MetaFunction } from "@remix-run/node";
-import { authenticator } from "~/utils/auth.server";
-import { LoaderFunction } from "@remix-run/node";
-import type { ActionFunction } from "@remix-run/node";
-import { getMyLocations, createLocation, deleteLocation } from "~/utils/location.server";
-
-import { Form, useLoaderData } from "@remix-run/react";
-import { Layout } from '~/components/layout';
-import Navbar from '~/components/navbar';
-import { useEffect, useState } from "react";
 import axios from 'axios';
-import Weather from '~/components/weather';
-import WeatherCopy from '~/components/weather copy';
-import WeatherDays from '~/components/weatherDays';
-import { Locationlist, LocationListProps } from "~/components/locationlist";
-import { Locationform } from "~/components/locationform";
 
 
 

@@ -17,35 +17,19 @@ import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
  * @throws {Error} - Throws an error if authentication fails.
  */
 export const loader: LoaderFunction = async ({ request }) => {
-    try {
-        // Authenticate user and redirect to home page on success
-        const user = await authenticator.isAuthenticated(request, {
-            successRedirect: "/",
-        });
-        return user;
-    } catch (error) {
-        // Handle authentication errors by redirecting to login page
-
-        throw new Error("Authentication failed");
-    }
-};
-
+    const user = await authenticator.isAuthenticated(request, {
+        successRedirect: "/",
+    })
+    return user
+}
 
 
 export const action: ActionFunction = async ({ request }) => {
-    try {
-        // Authenticate user using form data and redirect to home page on success
-        return await authenticator.authenticate("form", request, {
-
-
-            successRedirect: "/",
-        });
-    } catch (error) {
-        // Handle authentication errors by redirecting to login page
-        return { redirect: '/login' };
-    }
-};
-
+    return authenticator.authenticate("form", request, {
+        successRedirect: "/",
+        failureRedirect: "/login",
+    })
+}
 
 /**
  * React component representing a Google Login button.
@@ -63,7 +47,7 @@ function GoogleLoginButton() {
         },
     });
 
-    return <button onClick={signIn}>Iniciar sesión con Google</button>;
+    return <button onClick={signIn}>Log in with google</button>;
 }
 
 export default function Login() {
@@ -110,7 +94,7 @@ export default function Login() {
                         <button type="submit" name="_action" value="Sign In" className="w-full rounded-xl mt-2 bg-gradient-to-r from-blue-700 via-blue-800 to-blue-800 px-3 py-2 text-white font-semibold transition duration-300 ease-in-out hover:bg-blue-600">
                             Login
                         </button>
-                     </div>
+                    </div>
 
                 </form>
                 <div>
@@ -118,7 +102,7 @@ export default function Login() {
                         <GoogleLoginButton />
                     </GoogleOAuthProvider>
                 </div>
-                <p className="text-gray-600">You do not have an account?<Link to="/signup"><span className="text-red-600 px-2 underline">Sign in</span></Link></p>
+                <p className="text-gray-600">You do not have an account?<Link to="/signup"><span className="text-red-600 px-2 underline">Sign up</span></Link></p>
             </div>
         </Layout>
     );

@@ -33,7 +33,7 @@ export function Locationlist({ place, id, setData, setLocation }: LocationListPr
                         searchLocation(setData, setLocation, place);
                     }}
                 >
-                    <img src={eye} alt="Delete" className="w-4 h-4" />
+                    <img src={eye} alt="eye" className="w-4 h-4" />
                 </button>
                 <input type="hidden" name="id" value={id} />
 
