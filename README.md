@@ -26,13 +26,14 @@ Then run the app in production mode:
 npm start
 ```
 
-Now you'll need to pick a host to deploy it to.
+Open up http://localhost:3000 and you should be ready to go!
 
 ### Screenshots
 
 Here are some screenshots from the Remix Weather App:
 
 
-![image](https://github.com/xEliptik/weather-app/assets/104977348/20a7022e-5ab3-4752-b776-778e44f5a7ad)
-![image](https://github.com/xEliptik/weather-app/assets/104977348/0cd2a126-57bb-47f8-a775-9cad201d50ae)
-
+<div style="display: flex;">
+  <img src="https://github.com/xEliptik/weather-app/assets/104977348/20a7022e-5ab3-4752-b776-778e44f5a7ad" alt="Screenshot 1" width="400" />
+  <img src="https://github.com/xEliptik/weather-app/assets/104977348/0cd2a126-57bb-47f8-a775-9cad201d50ae" alt="Screenshot 2" width="400" />
+</div>
