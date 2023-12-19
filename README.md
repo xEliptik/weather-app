@@ -1,10 +1,10 @@
-# Welcome to Remix!
+# Welcome to Remix Weather App!
 
 - [Remix Docs](https://remix.run/docs)
 
 ## Development
 
-From your terminal:
+To start your app in development mode and rebuild assets on file changes, run the following command in your terminal:
 
 ```sh
 npm run dev
@@ -28,11 +28,11 @@ npm start
 
 Now you'll need to pick a host to deploy it to.
 
-### DIY
+### Screenshots
 
-If you're familiar with deploying node applications, the built-in Remix app server is production-ready.
+Here are some screenshots from the Remix Weather App:
 
-Make sure to deploy the output of `remix build`
 
-- `build/`
-- `public/build/`
+![image](https://github.com/xEliptik/weather-app/assets/104977348/20a7022e-5ab3-4752-b776-778e44f5a7ad)
+![image](https://github.com/xEliptik/weather-app/assets/104977348/0cd2a126-57bb-47f8-a775-9cad201d50ae)
+
