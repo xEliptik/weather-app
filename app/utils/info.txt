@@ -1,0 +1,77 @@
+648546319717-4jplle0ucla4fkk2d58md24k9ufbcm23.apps.googleusercontent.com
+
+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
+
+
+
+
+
+
+
+{
+  "data": {
+    "timelines": [
+      {
+        "timestep": "1d",
+        "endTime": "2023-12-21T05:00:00Z",
+        "startTime": "2023-12-16T05:00:00Z",
+        "intervals": [
+          {
+            "startTime": "2023-12-16T05:00:00Z",
+            "values": {
+              "humidity": 55.55,
+              "temperature": 6.09,
+              "weatherCode": 1000,
+              "windSpeed": 2.88
+            }
+          },
+          {
+            "startTime": "2023-12-17T05:00:00Z",
+            "values": {
+              "humidity": 43.33,
+              "temperature": 5.18,
+              "weatherCode": 1000,
+              "windSpeed": 2.23
+            }
+          },
+          {
+            "startTime": "2023-12-18T05:00:00Z",
+            "values": {
+              "humidity": 53.75,
+              "temperature": 6.99,
+              "weatherCode": 1000,
+              "windSpeed": 2.18
+            }
+          },
+          {
+            "startTime": "2023-12-19T05:00:00Z",
+            "values": {
+              "humidity": 91.13,
+              "temperature": 7.49,
+              "weatherCode": 1000,
+              "windSpeed": 4.45
+            }
+          },
+          {
+            "startTime": "2023-12-20T05:00:00Z",
+            "values": {
+              "humidity": 94.99,
+              "temperature": 0.43,
+              "weatherCode": 5001,
+              "windSpeed": 4.68
+            }
+          },
+          {
+            "startTime": "2023-12-21T05:00:00Z",
+            "values": {
+              "humidity": 91.55,
+              "temperature": 0.71,
+              "weatherCode": 5001,
+              "windSpeed": 4.17
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
