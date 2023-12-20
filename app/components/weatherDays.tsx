@@ -1,5 +1,3 @@
-import React from 'react';
-
 import * as imagesIcons from '../images/weatherIcons/WeatherIcons';
 import { weatherCode } from './weatherCodes'; // Asegúrate de proporcionar la ruta correcta
 
@@ -8,16 +6,12 @@ const WeatherDays = ({ weatherData }) => {
     const weatherCodeValue = weatherData?.data?.timelines[0]?.intervals[0]?.values?.weatherCode;
 
     if (weatherCodeValue === undefined) {
-        return null; // Si es undefined, no muestra nada
+        return null;
     }
 
     const weatherDescription = weatherCode.weatherCode[weatherCodeValue] || "Unknown";
     const weatherIconAlphanumeric = weatherDescription.replace(/,/g, '');
     const weatherIconAux = weatherIconAlphanumeric.replace(/\s+/g, '_');
-
-
-
-    // Accede al icono del clima utilizando el nuevo nombre
     const weatherIcon = imagesIcons[weatherIconAux];
 
 

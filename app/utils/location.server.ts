@@ -39,7 +39,7 @@ export const createLocation = async ({ place, postedBy }: Location) => { // Camb
     })
 }
 
-export const deleteLocation = async (id: string) => {
+export const deleteLocation = async (id: any) => {
     const locationById = await prisma.location.delete({ where: { id } });
     if (!locationById) {
         return json({ error: 'Could not delete the location' })
@@ -52,10 +52,13 @@ export const deleteLocation = async (id: string) => {
 }
 
 
-export const findLocationByPlace = async (place: string) => {
+export const findLocationByPlaceAndUser = async (place: string, userId: string) => {
     const location = await prisma.location.findFirst({
         where: {
             place: place,
+            postedBy: {
+                id: userId,
+            },
         },
     });
     return location;

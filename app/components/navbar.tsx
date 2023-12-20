@@ -34,9 +34,15 @@ const Navbar = () => {
               </button>
             </Form>
           ) : (
-            <Link to="/signup" className="text-grey-500 py-1 border px-3 text-sm rounded-md font-semibold">
-              Signup
-            </Link>
+            location.pathname === '/signup' ? (
+              <Link to="/login" className="text-grey-500 py-1 border px-3 text-sm rounded-md font-semibold">
+                Login
+              </Link>
+            ) : (
+              <Link to="/signup" className="text-grey-500 py-1 border px-3 text-sm rounded-md font-semibold">
+                Signup
+              </Link>
+            )
           )}
         </div>
       </div>

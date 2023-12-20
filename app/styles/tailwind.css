@@ -6,4 +6,10 @@
     .custom-class {
         @apply ...;
     }
+
+    .custommodal {
+        /* Estilos personalizados para el modal */
+        z-index: 50;
+        /* Por ejemplo, establecer el z-index en 50 */
+    }
 }

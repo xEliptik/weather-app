@@ -59,7 +59,7 @@ export default function Signup() {
 
     return (
         <Layout>
-            <div className="h-full justify-center items-center flex flex-col gap-y-5 bg-gradient-to-r from-indigo-500">
+            <div className="min-h-screen flex justify-center items-center flex-col gap-y-5">
                 <form method="POST" className="rounded-2xl bg-white p-6 w-96">
                     <div className="flex items-center justify-center">
                         <h2 className="text-3xl font-extrabold text-black-600 mb-5">Create an account</h2>
@@ -69,29 +69,41 @@ export default function Signup() {
                         type="name"
                         label="Name"
                         value={formData.name}
-                        onChange={e => handleInputChange(e, 'name')}
+                        onChange={(e) => handleInputChange(e, 'name')}
                     />
                     <Textfield
                         htmlFor="email"
                         label="Email"
                         value={formData.email}
-                        onChange={e => handleInputChange(e, 'email')}
+                        onChange={(e) => handleInputChange(e, 'email')}
                     />
                     <Textfield
                         htmlFor="password"
                         type="password"
                         label="Password"
                         value={formData.password}
-                        onChange={e => handleInputChange(e, 'password')}
+                        onChange={(e) => handleInputChange(e, 'password')}
                     />
                     <div className="w-full text-center mt-5">
-                        <button type="submit" name="_action" value="Sign In" className="w-full rounded-xl mt-2 bg-gradient-to-r from-blue-700 via-blue-800 to-blue-800 px-3 py-2 text-white font-semibold transition duration-300 ease-in-out hover:bg-blue-600">
+                        <button
+                            type="submit"
+                            name="_action"
+                            value="Sign In"
+                            className="w-full rounded-xl bg-gradient-to-r from-blue-700 via-blue-800 to-blue-800 px-3 py-2 text-white font-semibold transition duration-300 ease-in-out hover:bg-blue-600"
+                        >
                             Create an account
                         </button>
                     </div>
                 </form>
-                <p className="text-gray-600">Already have an account?<Link to="/login"><span className="text-red-600 px-2 underline">Sign In</span></Link></p>
+
+                <p className="text-gray-600 mt-5">
+                    Already have an account?
+                    <Link to="/login">
+                        <span className="text-red-600 px-2 underline">Sign In</span>
+                    </Link>
+                </p>
             </div>
+
         </Layout>
     );
 }

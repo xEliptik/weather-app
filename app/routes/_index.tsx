@@ -7,8 +7,8 @@ import axios from 'axios';
 import Weather from '~/components/weather';
 import WeatherCopy from '~/components/weather copy';
 import WeatherDays from '~/components/weatherDays';
-import { getMyLocations, createLocation, deleteLocation, findLocationByPlace } from "~/utils/location.server";
-import { Locationlist, LocationListProps } from "~/components/locationlist";
+import { getMyLocations, createLocation, deleteLocation, findLocationByPlaceAndUser } from "~/utils/location.server";
+import { LocationList, LocationListProps } from "~/components/locationlist";
 import { Locationform } from "~/components/locationform";
 import { MetaFunction, LoaderFunction, ActionFunction } from '@remix-run/node';
 import { handleKeyDown, searchLocation, fetchWeatherDataByLocation } from "~/utils/locationFunctions";
@@ -54,25 +54,26 @@ export const action: ActionFunction = async ({ request }) => {
 
     }
     case "new": {
+      const user = await authenticator.isAuthenticated(request);
+      const existingLocation = await findLocationByPlaceAndUser(place, user.id);
 
-      const existingLocation = await findLocationByPlace(place);
       if (!place) {
         return null;
       }
+
       if (existingLocation) {
-        console.log("Location already exists:", place);
+        console.log("Location already exists for this user:", place);
         return null;
       }
 
       // Create a new location
-      const user = await authenticator.isAuthenticated(request);
       const newLocation = await createLocation({
         place: place as string,
         postedBy: {
           connect: {
-            id: user.id
-          }
-        }
+            id: user.id,
+          },
+        },
       });
 
       return newLocation;
@@ -123,7 +124,7 @@ export default function Index() {
   const { user, userLocation } = useLoaderData<typeof loader>()
   return (
     <Layout>
-      <div className="w-full h-full relative bg-gradient-to-r from-indigo-500">
+      <div className="w-full h-full relative">
         {/* <Weather weatherData={data} /> */}
         <div className="flex justify-center mb-4">
           <p className="text-2xl font-bold">Here's the weather forecast for your current location</p>
@@ -142,22 +143,20 @@ export default function Index() {
             <input
               type="text"
               className="py-3 px-6 w-[500px] text-lg rounded-3xl border
-      border-gray-200 text-gray-600
-      placeholder: text-gray-400 focus:outline-none
-      bg-white-600/100 shadow-md mt-4"
+    border-gray-200 text-gray-600
+    placeholder: text-gray-400 focus:outline-none
+    bg-white-600/100 shadow-md mt-4"
               placeholder="Enter location"
               onChange={(event) => setLocation(event.target.value)}
-              onKeyDownCapture={handleKeyDown(setData, setLocation, location)}
+              onKeyDownCapture={handleKeyDown(setData, location)}
               name="place"
               id="place"
             />
-            <input type="hidden" name="data" value={JSON.stringify(data)} /> {/* Agrega este campo oculto */}
-
+            <input type="hidden" name="data" value={JSON.stringify(data)} />
             <button
               className="inline-flex text-white bg-gradient-to-r from-indigo-300 to-purple-400 border-1 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ml-4"
               onClick={() => {
-
-                searchLocation(setData, setLocation, location);
+                searchLocation(setData, location);
               }}
               type="submit"
               name="action"
@@ -165,6 +164,7 @@ export default function Index() {
             >
               Search
             </button>
+
 
           </div>
 
@@ -176,11 +176,11 @@ export default function Index() {
           <div className="bg-gradient-to-r from-gray-200/50 via-gray-400/50 to-gray-600/50 p-8 rounded-md">
             <h1 className="text-xl font-bold mb-4">Location History</h1>
             <hr className="border-t border-black-300 my-4 w-full" />
-            <div className="grid gap-5 justify-center">
+            <div className="grid gap-3 justify-center">
               {userLocation.locations.length ? (
                 <>
                   {userLocation.locations.map((location: LocationListProps) => (
-                    <Locationlist key={location.id} id={location.id} place={location.place} setData={setData} setLocation={setLocation} />
+                    <LocationList key={location.id} id={location.id} place={location.place} setData={setData} />
                   ))}
                 </>
               ) : (

@@ -3,9 +3,9 @@ import axios from 'axios';
 
 
 
-export const handleKeyDown = (event, setData: any, setLocation: any, location: string) => {
+export const handleKeyDown = (event, setData: any, location: string) => {
     if (event.key === "Enter") {
-        searchLocation(setData, setLocation, location);
+        searchLocation(setData, location);
     }
 };
 
@@ -17,20 +17,20 @@ const options = {
 
 const apiKey = 'NLAtcSwXmFB230CkD5myal7mdqiI0ag5';
 
-export const searchLocation = (setData: any, setLocation: any, location: string) => {
+export const searchLocation = (setData: any, location: string) => {
     const url = `https://api.tomorrow.io/v4/timelines?location=${location}&fields=temperature,humidity,windSpeed,weatherCode&timesteps=1d&units=metric&apikey=${apiKey}`;
 
     axios.get(url, options)
         .then((response) => {
             setData(response.data);
-            setLocation(""); // Corregir la ubicación dentro del bloque .then()
-
+            // setLocation(""); // Actualizar la ubicación solo después de procesar la respuesta
         })
         .catch((error) => {
             console.error("Error al obtener los datos del clima:", error);
             setData("");
         });
 };
+
 
 
 export const fetchWeatherDataByLocation = async (latitude: number, longitude: number, setData: any, setLocation: any) => {
