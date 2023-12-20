@@ -1,9 +1,3 @@
-interface ModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    children: React.ReactNode;
-}
-
 export default function Modal({ open, onClose, children }) {
     return (
         // backdrop

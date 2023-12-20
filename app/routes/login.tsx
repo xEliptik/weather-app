@@ -94,8 +94,7 @@ export default function Login() {
                             name="_action"
                             value="Sign In"
                             className="w-full rounded-xl bg-gradient-to-r from-blue-700 via-blue-800 to-blue-800 px-3 py-2 text-white font-semibold transition duration-300 ease-in-out hover:bg-blue-600"
-                        >
-                            Login
+                        > Login
                         </button>
                     </div>
                 </form>

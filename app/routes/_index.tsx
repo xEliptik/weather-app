@@ -92,10 +92,9 @@ export const action: ActionFunction = async ({ request }) => {
 
 
 
-
-
 export default function Index() {
   const [data, setData] = useState({});
+  const [dataUserLocation, setDataUserLocation] = useState({});
   const [location, setLocation] = useState("");
 
 
@@ -105,34 +104,31 @@ export default function Index() {
    * @param {Function} setData - The function to set the weather data.
    * @param {Function} setLocation - The function to set the location.
    */
-  // useEffect(() => {
-  //   if (navigator.geolocation) {
-  //     navigator.geolocation.getCurrentPosition(
-  //       (position) => {
-  //         const { latitude, longitude } = position.coords;
-  //         setLocation({ latitude, longitude });
-  //         fetchWeatherDataByLocation(latitude, longitude, setData, setLocation);
-  //       },
-  //       (error) => {
-  //         console.error("Error al obtener la ubicación:", error);
-  //       }
-  //     );
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setLocation({ latitude, longitude });
+          fetchWeatherDataByLocation(latitude, longitude, setDataUserLocation);
+        },
+        (error) => {
+          console.error("Error al obtener la ubicación:", error);
+        }
+      );
+    }
+  }, []);
 
 
   const { user, userLocation } = useLoaderData<typeof loader>()
   return (
     <Layout>
       <div className="w-full h-full relative">
-        {/* <Weather weatherData={data} /> */}
         <div className="flex justify-center mb-4">
           <p className="text-2xl font-bold">Here's the weather forecast for your current location</p>
         </div>
 
-
-        {/* <Weather weatherData={data} /> */}
-        <WeatherCopy />
+        <Weather weatherData={dataUserLocation} />
 
         <Form method="post">
           <div className="text-center p-4">
@@ -143,9 +139,9 @@ export default function Index() {
             <input
               type="text"
               className="py-3 px-6 w-[500px] text-lg rounded-3xl border
-    border-gray-200 text-gray-600
-    placeholder: text-gray-400 focus:outline-none
-    bg-white-600/100 shadow-md mt-4"
+                  border-gray-200 text-gray-600
+                  placeholder: text-gray-400 focus:outline-none
+                  bg-white-600/100 shadow-md mt-4"
               placeholder="Enter location"
               onChange={(event) => setLocation(event.target.value)}
               onKeyDownCapture={handleKeyDown(setData, location)}
@@ -164,15 +160,11 @@ export default function Index() {
             >
               Search
             </button>
-
-
           </div>
-
           <Weather weatherData={data} />
         </Form>
-
         <WeatherDays weatherData={data} />
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center mt-5">
           <div className="bg-gradient-to-r from-gray-200/50 via-gray-400/50 to-gray-600/50 p-8 rounded-md">
             <h1 className="text-xl font-bold mb-4">Location History</h1>
             <hr className="border-t border-black-300 my-4 w-full" />
@@ -189,21 +181,11 @@ export default function Index() {
             </div>
           </div>
         </div>
-
         <br />
-
-
-
-
       </div>
-
-
-
     </Layout>
   );
 }
 
-{/* <Weather weatherData={data} /> */ }
-{/* <WeatherCopy /> */ }
 
 

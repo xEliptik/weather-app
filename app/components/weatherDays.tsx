@@ -1,5 +1,5 @@
 import * as imagesIcons from '../images/weatherIcons/WeatherIcons';
-import { weatherCode } from './weatherCodes'; // Asegúrate de proporcionar la ruta correcta
+import { weatherCode } from '../utils/weatherCodes'; // Asegúrate de proporcionar la ruta correcta
 
 
 const WeatherDays = ({ weatherData }) => {
@@ -9,6 +9,7 @@ const WeatherDays = ({ weatherData }) => {
         return null;
     }
 
+    //replace , and spaces to get the icons
     const weatherDescription = weatherCode.weatherCode[weatherCodeValue] || "Unknown";
     const weatherIconAlphanumeric = weatherDescription.replace(/,/g, '');
     const weatherIconAux = weatherIconAlphanumeric.replace(/\s+/g, '_');
@@ -19,7 +20,7 @@ const WeatherDays = ({ weatherData }) => {
 
         <div className="flex flex-col items-center">
             <h1 className="text-xl font-bold mt-4">
-                Pronóstico de los próximos días
+                Forecast of the next few days
             </h1>
 
             <div className="flex flex-wrap justify-center">

@@ -1,16 +1,12 @@
 import React, { useState } from "react";
-import type { V2_MetaFunction } from "@remix-run/node";
 import { ActionFunction, json, LoaderFunction } from '@remix-run/node';
 import { useActionData, Link } from "@remix-run/react";
-
 import { authenticator } from "~/utils/auth.server"
 import { createUser } from "~/utils/user.server"
 import { Layout } from '~/components/layout';
 import { Textfield } from '~/components/textfield';
 
-export const meta: V2_MetaFunction = () => {
-    return [{ title: "New Remix App login" }];
-};
+
 
 export const loader: LoaderFunction = async ({ request }) => {
     const user = await authenticator.isAuthenticated(request, {
@@ -19,6 +15,12 @@ export const loader: LoaderFunction = async ({ request }) => {
     return { user }
 }
 
+/**
+ * Handles user actions such as signing up.
+ *
+ * @param {Object} request - The request object.
+ * @returns {Object} - The authentication result or an error response.
+ */
 export const action: ActionFunction = async ({ request }) => {
     const form = await request.formData();
     const action = form.get("_action");
@@ -56,7 +58,6 @@ export default function Signup() {
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, field: string) => {
         setFormData(form => ({ ...form, [field]: event.target.value }))
     }
-
     return (
         <Layout>
             <div className="min-h-screen flex justify-center items-center flex-col gap-y-5">
@@ -95,7 +96,6 @@ export default function Signup() {
                         </button>
                     </div>
                 </form>
-
                 <p className="text-gray-600 mt-5">
                     Already have an account?
                     <Link to="/login">
@@ -103,7 +103,6 @@ export default function Signup() {
                     </Link>
                 </p>
             </div>
-
         </Layout>
     );
 }
