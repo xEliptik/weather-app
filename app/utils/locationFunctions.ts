@@ -9,9 +9,9 @@ import axios from 'axios';
  * @param {Function} setData - The function to set the weather data.
  * @param {string} location - The location to search for.
  */
-export const handleKeyDown = (event, setData: any, location: string) => {
+export const handleKeyDown = (event, setData: any, location: string, setActive429: any) => {
     if (event.key === "Enter") {
-        searchLocation(setData, location);
+        searchLocation(setData, location, setActive429);
     }
 };
 
@@ -31,16 +31,23 @@ const apiKey = 'NLAtcSwXmFB230CkD5myal7mdqiI0ag5';
  * @param {Function} setData - The function to set the weather data.
  * @param {string} location - The location to search for.
  */
-export const searchLocation = (setData: any, location: string) => {
+export const searchLocation = (setData: any, location: string, setActive429: any) => {
     const url = `https://api.tomorrow.io/v4/timelines?location=${location}&fields=temperature,humidity,windSpeed,weatherCode&timesteps=1d&units=metric&apikey=${apiKey}`;
 
     axios.get(url, options)
         .then((response) => {
+            setActive429(true);
             setData(response.data);
         })
         .catch((error) => {
-            console.error("Error al obtener los datos del clima:", error);
             setData("");
+            if (error.response.status === 429) {
+                setActive429(false);
+                console.error("Error 429 429 429 429 429:429 429 429 429 429:429 429 429 429 429:");
+            } else {
+                console.error("Error al obtener los datos del clima:");
+                setActive429(false);
+            }
         });
 };
 
@@ -52,13 +59,15 @@ export const searchLocation = (setData: any, location: string) => {
  * @param {number} longitude - The longitude of the location.
  * @param {Function} setData - The function to set the weather data.
  */
-export const fetchWeatherDataByLocation = async (latitude: number, longitude: number, setData: any) => {
+export const fetchWeatherDataByLocation = async (latitude: number, longitude: number, setData: any, setActive429: any) => {
     const url = `https://api.tomorrow.io/v4/timelines?location=${latitude},${longitude}&fields=temperature,humidity,windSpeed,weatherCode&timesteps=current&units=metric&apikey=${apiKey}`;
     try {
+        setActive429(true);
         const response = await axios.get(url, options);
         setData(response.data);
         console.log(JSON.stringify(response.data, null, 2));
     } catch (error) {
+        setActive429(false);
         console.error("Error al obtener los datos del clima:", error);
     }
 };

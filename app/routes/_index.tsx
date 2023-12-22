@@ -96,6 +96,7 @@ export default function Index() {
   const [data, setData] = useState({});
   const [dataUserLocation, setDataUserLocation] = useState({});
   const [location, setLocation] = useState("");
+  const [Active429, setActive429] = useState(Boolean);
 
 
   /**
@@ -110,16 +111,16 @@ export default function Index() {
         (position) => {
           const { latitude, longitude } = position.coords;
           setLocation({ latitude, longitude });
-          fetchWeatherDataByLocation(latitude, longitude, setDataUserLocation);
+          fetchWeatherDataByLocation(latitude, longitude, setDataUserLocation, setActive429);
         },
         (error) => {
+          setActive429(false);
+
           console.error("Error al obtener la ubicación:", error);
         }
       );
     }
   }, []);
-
-
   const { user, userLocation } = useLoaderData<typeof loader>()
   return (
     <Layout>
@@ -144,7 +145,7 @@ export default function Index() {
                   bg-white-600/100 shadow-md mt-4"
               placeholder="Enter location"
               onChange={(event) => setLocation(event.target.value)}
-              onKeyDownCapture={handleKeyDown(setData, location)}
+              onKeyDownCapture={handleKeyDown(setData, location, setActive429)}
               name="place"
               id="place"
             />
@@ -152,7 +153,7 @@ export default function Index() {
             <button
               className="inline-flex text-white bg-gradient-to-r from-indigo-300 to-purple-400 border-1 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ml-4"
               onClick={() => {
-                searchLocation(setData, location);
+                searchLocation(setData, location, setActive429);
               }}
               type="submit"
               name="action"
@@ -160,7 +161,11 @@ export default function Index() {
             >
               Search
             </button>
+            <div>
+              {!Active429 && <p className="text-red-500">Error finding the location or too many requests.</p>}
+            </div>
           </div>
+
           <Weather weatherData={data} />
         </Form>
         <WeatherDays weatherData={data} />
@@ -172,7 +177,7 @@ export default function Index() {
               {userLocation.locations.length ? (
                 <>
                   {userLocation.locations.map((location: LocationListProps) => (
-                    <LocationList key={location.id} id={location.id} place={location.place} setData={setData} />
+                    <LocationList key={location.id} id={location.id} place={location.place} setData={setData} setActive429={setActive429} />
                   ))}
                 </>
               ) : (

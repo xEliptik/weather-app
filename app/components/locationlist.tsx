@@ -10,9 +10,10 @@ export interface LocationListProps {
     place: any;
     id: string;
     setData: object;
+    setActive429: object;
 }
 
-export function LocationList({ place, id, setData }: LocationListProps) {
+export function LocationList({ place, id, setData, setActive429 }: LocationListProps) {
     const [open, setOpen] = useState(false)
     return (
         <><div className="flex items-center justify-between relative">
@@ -33,7 +34,7 @@ export function LocationList({ place, id, setData }: LocationListProps) {
                 <button
                     className="button flex items-center justify-center"
                     onClick={() => {
-                        searchLocation(setData, place);
+                        searchLocation(setData, place, setActive429);
                     }}
                 >
                     <img src={eye} alt="eye" className="w-4 h-4" />

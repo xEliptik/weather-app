@@ -70,7 +70,7 @@ export default function Login() {
 
     return (
         <Layout>
-            <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-indigo-500">
+            <div className="min-h-screen flex flex-col items-center justify-center">
                 <form method="POST" className="rounded-2xl bg-white p-6 w-96">
                     <div className="flex items-center justify-center mb-5">
                         <h2 className="text-3xl font-extrabold text-black-600">Login</h2>
@@ -100,11 +100,11 @@ export default function Login() {
                 </form>
 
                 <div className="flex flex-col items-center mt-5 text-center">
-                    <GoogleOAuthProvider clientId="648546319717-4jplle0ucla4fkk2d58md24k9ufbcm23.apps.googleusercontent.com">
+                    {/* <GoogleOAuthProvider clientId="648546319717-4jplle0ucla4fkk2d58md24k9ufbcm23.apps.googleusercontent.com">
                         <GoogleLoginButton />
-                    </GoogleOAuthProvider>
+                    </GoogleOAuthProvider> */}
 
-                    <p className="text-gray-600 mt-5">
+                    <p className="text-black-600 mt-5">
                         You do not have an account?
                         <Link to="/signup">
                             <span className="text-red-600 px-2 underline">Sign up</span>
