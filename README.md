@@ -31,6 +31,8 @@ Open up http://localhost:3000 and you should be ready to go!
 ## Database
 
 Modify the schema.prisma file to make changes to the database configuration. The current setup utilizes MongoDB with Prisma as the database management system. Adjust the schema.prisma file to manage the database settings.
+Establish a connection to MongoDB in the .env file.
+
 ## Screenshots
 
 Here are some screenshots from the Remix Weather App:
